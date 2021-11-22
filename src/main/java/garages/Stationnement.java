@@ -43,7 +43,7 @@ public class Stationnement {
 	@Override
 	public String toString() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy");
-		return String.format("Stationnement{ entree=%s, %s }",
+		return String.format("      Stationnement{ entree=%s, %s }",
 			dateFormat.format(entree),
 			estEnCours() ? "en cours" : "sortie=" + dateFormat.format(fin)
 		);

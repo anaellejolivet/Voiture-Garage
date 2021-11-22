@@ -29,6 +29,9 @@ public class Voiture {
 	 */
 	public void entreAuGarage(Garage g) throws Exception {
 		// Et si la voiture est déjà dans un garage ?
+                if (estDansUnGarage()){
+                    throw new Exception("La voiture ne doit pas être déjà dans un garage");
+                }
 		Stationnement s = new Stationnement(this, g);
 		myStationnements.add(s);
 	}
@@ -40,27 +43,36 @@ public class Voiture {
 	 * @throws java.lang.Exception si la voiture n'est pas dans un garage
 	 */
 	public void sortDuGarage() throws Exception {
-		throw new UnsupportedOperationException("Pas encore implémenté");
 		// TODO: Implémenter cette méthode
+                if (!estDansUnGarage()){
+                    throw new Exception("La voiture doit être dans un garage");
+                }
 		// Trouver le dernier stationnement de la voiture
+                Stationnement stationnement = myStationnements.get(myStationnements.size()-1);
 		// Terminer ce stationnement
+                stationnement.terminer();
 	}
 
 	/**
 	 * @return l'ensemble des garages visités par cette voiture
 	 */
 	public Set<Garage> garagesVisites() {
-		// TODO: Implémenter cette méthode
-		throw new UnsupportedOperationException("Pas encore implémenté");
-	}
+            Set<Garage> listeGarage = new HashSet<>();
+            for (int i = 0; i< myStationnements.size(); i++){
+                listeGarage.add(myStationnements.get(i).getGarage());
+            }
+            return listeGarage;
+        }
 
 	/**
 	 * @return vrai si la voiture est dans un garage, faux sinon
 	 */
 	public boolean estDansUnGarage() {
 		// TODO: Implémenter cette méthode
-		throw new UnsupportedOperationException("Pas encore implémenté");
 		// Vrai si le dernier stationnement est en cours
+                if(myStationnements.isEmpty()){
+                return false;
+                }else return myStationnements.get(myStationnements.size()-1).estEnCours();
 	}
 
 	/**
@@ -79,7 +91,21 @@ public class Voiture {
 	 */
 	public void imprimeStationnements(PrintStream out) {
 		// TODO: Implémenter cette méthode
-		throw new UnsupportedOperationException("Pas encore implémenté");
+                Set  garages = this.garagesVisites();
+                List<Garage> garagesList = new ArrayList<Garage>(garages);
+                for (int i=0; i<garages.size(); i++){
+                    out.append(garagesList.get(i).toString());
+                    out.append("\n");
+                    for (int j=0; j<myStationnements.size(); j++){
+                        if (garagesList.get(i).equals(myStationnements.get(j).getGarage())){
+                            Stationnement s = myStationnements.get(j);
+                            out.append(s.toString());
+                            out.append("\n");
+                        }
+                    }
+                    
+                }
+                System.out.println();
 	}
 
 }
