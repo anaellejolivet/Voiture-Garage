@@ -91,13 +91,11 @@ public class Voiture {
 	 */
 	public void imprimeStationnements(PrintStream out) {
 		// TODO: Implémenter cette méthode
-                Set  garages = this.garagesVisites();
-                List<Garage> garagesList = new ArrayList<Garage>(garages);
-                for (int i=0; i<garages.size(); i++){
-                    out.append(garagesList.get(i).toString());
+                for (Garage g: garagesVisites()){
+                    out.append(g.toString());
                     out.append("\n");
                     for (int j=0; j<myStationnements.size(); j++){
-                        if (garagesList.get(i).equals(myStationnements.get(j).getGarage())){
+                        if (g.equals(myStationnements.get(j).getGarage())){
                             Stationnement s = myStationnements.get(j);
                             out.append(s.toString());
                             out.append("\n");
